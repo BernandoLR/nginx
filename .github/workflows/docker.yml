@@ -72,14 +72,14 @@ jobs:
       # Step 4: Stop the Nginx container if it exists
       - name: Stop Nginx container
         run: |
-            echo "Stopping Nginx container
-            docker stop nginx
+          echo "Stopping Nginx container"
+          docker stop nginx
           
       # Step 5: Remove the Nginx container if it exists
       - name: Remove Nginx container
         run: |
-            echo "Removing Nginx container with ID: $CONTAINER_ID"
-            docker rm nginx
+          echo "Removing Nginx container"
+          docker rm nginx
           
       # Step 3: Run the Docker container
       - name: Run the Docker container
