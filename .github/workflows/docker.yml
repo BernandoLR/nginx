@@ -63,10 +63,38 @@ jobs:
         run: |
           docker pull bernando/nginx:latest
 
+      # Step 3: List all running containers (Check if nginx container exists)
+      - name: Check for running Nginx container
+        run: |
+          echo "Listing running containers..."
+          docker ps  # This lists only running containers
+
+      # Step 4: Stop the Nginx container if it exists
+      - name: Stop Nginx container
+        run: |
+          CONTAINER_ID=$(docker ps -q -f "ancestor=nginx")  # Get the container ID of the running nginx container
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Stopping Nginx container with ID: $CONTAINER_ID"
+            docker stop $CONTAINER_ID
+          else
+            echo "No running Nginx container found."
+          fi
+
+      # Step 5: Remove the Nginx container if it exists
+      - name: Remove Nginx container
+        run: |
+          CONTAINER_ID=$(docker ps -a -q -f "ancestor=nginx")  # Get the container ID of all nginx containers (including stopped)
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Removing Nginx container with ID: $CONTAINER_ID"
+            docker rm $CONTAINER_ID
+          else
+            echo "No Nginx container to remove."
+          fi
+
       # Step 3: Run the Docker container
       - name: Run the Docker container
         run: |
-          docker run -d -p 80:80 bernando/nginx:latest
+          docker run -d --name nginx -p 80:80 bernando/nginx:latest
 
       # Step 4: Optional - Check the running containers
       - name: List running Docker containers
