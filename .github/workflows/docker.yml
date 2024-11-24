@@ -67,18 +67,36 @@ jobs:
         run: |
           echo "Listing running containers..."
           docker ps  # This lists only running containers
+          CONTAINER_ID=$(docker ps -aqf "name=nginx")  # Filter by nginx image to get the container ID
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Nginx container is running with ID: $CONTAINER_ID"
+          else
+            echo "No Nginx container is currently running."
+          fi
+
 
       # Step 4: Stop the Nginx container if it exists
       - name: Stop Nginx container
         run: |
           echo "Stopping Nginx container"
-          docker stop nginx
+          CONTAINER_ID=$(docker ps -aqf "name=nginx")  # Filter by nginx image to get the container ID
+          if [ -n "$CONTAINER_ID" ]; then
+            docker stop $CONTAINER_ID
+          else
+            echo "No Nginx container is currently running."
+          fi
+          
           
       # Step 5: Remove the Nginx container if it exists
       - name: Remove Nginx container
         run: |
           echo "Removing Nginx container"
-          docker rm nginx
+          CONTAINER_ID=$(docker ps -aqf "name=nginx")  # Filter by nginx image to get the container ID
+          if [ -n "$CONTAINER_ID" ]; then
+            docker rm $CONTAINER_ID
+          else
+            echo "No Nginx container is currently running."
+          fi
           
       # Step 3: Run the Docker container
       - name: Run the Docker container
@@ -107,23 +125,40 @@ jobs:
         run: |
           docker pull bernando/nginx:latest
 
-      # Step 3: List all running containers (Check if nginx container exists)
       - name: Check for running Nginx container
         run: |
           echo "Listing running containers..."
           docker ps  # This lists only running containers
+          CONTAINER_ID=$(docker ps -aqf "name=nginx")  # Filter by nginx image to get the container ID
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Nginx container is running with ID: $CONTAINER_ID"
+          else
+            echo "No Nginx container is currently running."
+          fi
+
 
       # Step 4: Stop the Nginx container if it exists
       - name: Stop Nginx container
         run: |
           echo "Stopping Nginx container"
-          docker stop nginx
+          CONTAINER_ID=$(docker ps -aqf "name=nginx")  # Filter by nginx image to get the container ID
+          if [ -n "$CONTAINER_ID" ]; then
+            docker stop $CONTAINER_ID
+          else
+            echo "No Nginx container is currently running."
+          fi
+          
           
       # Step 5: Remove the Nginx container if it exists
       - name: Remove Nginx container
         run: |
           echo "Removing Nginx container"
-          docker rm nginx
+          CONTAINER_ID=$(docker ps -aqf "name=nginx")  # Filter by nginx image to get the container ID
+          if [ -n "$CONTAINER_ID" ]; then
+            docker rm $CONTAINER_ID
+          else
+            echo "No Nginx container is currently running."
+          fi
           
       # Step 3: Run the Docker container
       - name: Run the Docker container
