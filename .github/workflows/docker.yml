@@ -90,7 +90,7 @@ jobs:
         run: |
           docker ps
 
-nginx-2:
+  nginx-2:
     runs-on: self-hosted  # Use the self-hosted runner
     needs : build
 
@@ -134,4 +134,3 @@ nginx-2:
       - name: List running Docker containers
         run: |
           docker ps
-
